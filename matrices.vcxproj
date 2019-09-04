@@ -130,7 +130,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.t.cpp" />
     <ClCompile Include="matrix_util.t.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="catch.hpp" />

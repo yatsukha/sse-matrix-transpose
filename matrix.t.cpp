@@ -4,7 +4,7 @@
 #include <type_traits>
 
 TEST_CASE("matrix constructor and property test") {
-  ::pr::matrix<int, 5, 5> m0; 
+  ::pr::matrix<int, 5, 5> m0;
 
   REQUIRE(5 == m0.rows);
   REQUIRE(5 == m0.cols);
@@ -31,10 +31,9 @@ TEST_CASE("matrix indexing test") {
       REQUIRE(i * j == m1[i][j]);
 }
 
-// is alignment public info?
-TEST_CASE("row alignment test") {
-  ::pr::matrix<int, 256, 256> m;
-
-  for (::std::size_t i = 0; i < m.rows; ++i)
-    REQUIRE(0 == reinterpret_cast<::std::size_t>(m[i]) % 16);
-}
+//TEST_CASE("row alignment test") {
+//  ::pr::matrix<int, 256, 256> m;
+//
+//  for (::std::size_t i = 0; i < m.rows; ++i)
+//    REQUIRE(0 == reinterpret_cast<::std::size_t>(m[i]) % 16);
+//}
