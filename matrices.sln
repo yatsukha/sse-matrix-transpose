@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrices", "matrices.vcxproj", "{4F2B9335-9A6E-4F90-A7E1-824AFC76EE36}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "benchmarks", "..\benchmarks\benchmarks.vcxproj", "{3A167DD5-F490-45C2-8F0D-944E6771074B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{4F2B9335-9A6E-4F90-A7E1-824AFC76EE36}.Release|x64.Build.0 = Release|x64
 		{4F2B9335-9A6E-4F90-A7E1-824AFC76EE36}.Release|x86.ActiveCfg = Release|Win32
 		{4F2B9335-9A6E-4F90-A7E1-824AFC76EE36}.Release|x86.Build.0 = Release|Win32
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Debug|x64.ActiveCfg = Debug|x64
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Debug|x64.Build.0 = Debug|x64
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Debug|x86.Build.0 = Debug|Win32
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Release|x64.ActiveCfg = Release|x64
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Release|x64.Build.0 = Release|x64
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Release|x86.ActiveCfg = Release|Win32
+		{3A167DD5-F490-45C2-8F0D-944E6771074B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
