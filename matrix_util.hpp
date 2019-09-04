@@ -60,25 +60,25 @@ namespace pr {
       ::std::size_t const max_i = (m.rows / 2) * 2;
       ::std::size_t const max_j = (m.cols / 2) * 2;
 
-      ::__m128 r0, r1;
+      ::__m128d r0, r1;
 
       for (::std::size_t i = 0; i < max_i; i += 2) {
         for (::std::size_t j = 0; j < max_j; j += 2) {
-          r0 = ::_mm_load_ps(reinterpret_cast<float const*>(&m[i    ][j]));
-          r1 = ::_mm_load_ps(reinterpret_cast<float const*>(&m[i + 1][j]));
+          r0 = ::_mm_load_pd(reinterpret_cast<double const*>(&m[i    ][j]));
+          r1 = ::_mm_load_pd(reinterpret_cast<double const*>(&m[i + 1][j]));
 
-          ::_mm_store_ps(reinterpret_cast<float*>(
-            &transposed[j    ][i]), 
-            ::_mm_shuffle_ps(r1, r0, _MM_SHUFFLE(3, 2, 1, 0))
+          ::_mm_store_pd(reinterpret_cast<double*>(
+            &transposed[j][i]), 
+            ::_mm_shuffle_pd(r0, r1, 0b00)
           );
 
-          ::_mm_store_ps(reinterpret_cast<float*>(
+          ::_mm_store_pd(reinterpret_cast<double*>(
             &transposed[j + 1][i]), 
-            ::_mm_shuffle_ps(r1, r0, _MM_SHUFFLE(1, 0, 3, 2))
+            ::_mm_shuffle_pd(r0, r1, 0b11)
           );
         }
 
-        // TODO: better loops
+        // TODO: more efficient loops
         for (::std::size_t k = 0; k < 2; ++k)
           for (::std::size_t j = max_j; j < m.cols; ++j)
             transposed[j][i + k] = m[i + k][j];
@@ -95,11 +95,11 @@ namespace pr {
     matrix<T, C, R> sse_1pack_transpose(matrix<T, R, C> const& m) {
       matrix<T, C, R> transposed;
 
-      for (int i = 0; i < m.rows; ++i)
-        for (int j = 0; j < m.cols; ++j)
+      for (::std::size_t i = 0; i < m.rows; ++i)
+        for (::std::size_t j = 0; j < m.cols; ++j)
           ::_mm_store_ps(
             reinterpret_cast<float*>(&transposed[j][i]), 
-            ::_mm_load_ps(reinterpret_cast<float*>(&m[i][j]))
+            ::_mm_load_ps(reinterpret_cast<float const*>(&m[i][j]))
           );
 
       return transposed;
