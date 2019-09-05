@@ -69,7 +69,7 @@ namespace pr {
 
 int main() noexcept {
 
-  auto m_inv = ::pr::random_matrix<int, 255, (1 << 17) + 3>();
+  auto m_inv = ::pr::random_matrix<int, 255, (1 << 16) + 3>();
 
   ::std::vector<::std::function<void(void)>> tasks = {
     [m_inv]{ ::pr::transpose(m_inv); },
@@ -82,7 +82,7 @@ int main() noexcept {
   ::std::cout << "regular transpose: " << results[0].first.count() << " " << results[0].second << ::std::endl;
   ::std::cout << "sse transpose:     " << results[1].first.count() << " " << results[1].second << ::std::endl;
 
-  auto m = ::pr::random_matrix<int, (1 << 17) + 3, 255>();
+  auto m = ::pr::random_matrix<int, (1 << 16) + 3, 255>();
 
   tasks = {
     [m]{ ::pr::transpose(m); },
