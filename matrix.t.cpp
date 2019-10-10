@@ -31,9 +31,9 @@ TEST_CASE("matrix indexing test") {
       REQUIRE(i * j == m1[i][j]);
 }
 
-//TEST_CASE("row alignment test") {
-//  ::pr::matrix<int, 256, 256> m;
-//
-//  for (::std::size_t i = 0; i < m.rows; ++i)
-//    REQUIRE(0 == reinterpret_cast<::std::size_t>(m[i]) % 16);
-//}
+TEST_CASE("row alignment test") {
+  ::pr::matrix<int, 256, 256> m;
+
+  for (::std::size_t i = 0; i < m.rows; ++i)
+    REQUIRE(0 == reinterpret_cast<::std::size_t>(m[i]) % 16);
+}

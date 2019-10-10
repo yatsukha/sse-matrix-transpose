@@ -8,10 +8,13 @@
 #include <cmath>
 #include <type_traits>
 #include <numeric>
+#include <locale>
 
 namespace pr {
 
-  using result_type = ::std::vector<::std::pair<::std::chrono::microseconds, double>>;
+  using result_type = ::std::vector<::std::pair<::std::chrono::nanoseconds, double>>;
+
+  
   
   result_type measure(::std::vector<::std::function<void(void)>>& tasks, ::std::size_t repetitions) {
 
@@ -67,31 +70,26 @@ namespace pr {
 
 }
 
+::std::ostream& operator<<(::std::ostream& out, ::pr::result_type::value_type const& r) {
+  out << r.first.count() / 1000.0 << " microseconds, standard deviation: " << r.second;
+  return out;
+}
+
+#define R 100
+#define C 1000
+#define TYPE double
+
 int main() noexcept {
+  auto m = ::pr::random_matrix<TYPE, R, C>();
+  auto t = ::pr::matrix<TYPE, C, R>{};
 
-  auto m_inv = ::pr::random_matrix<int, 255, (1 << 16) + 3>();
-
-  ::std::vector<::std::function<void(void)>> tasks = {
-    [m_inv]{ ::pr::transpose(m_inv); },
-    [m_inv]{ ::pr::sse_transpose(m_inv); }
+  ::std::vector<::std::function<void(void)>> tasks{
+    [&]{ ::pr::transpose(m, t); },
+    [&]{ ::pr::sse_transpose(m, t); }
   };
 
-  auto results = ::pr::measure(tasks, 5);
+  auto r = ::pr::measure(tasks, 1000);
 
-  ::std::cout << "-- column intensive --" << ::std::endl;
-  ::std::cout << "regular transpose: " << results[0].first.count() << " " << results[0].second << ::std::endl;
-  ::std::cout << "sse transpose:     " << results[1].first.count() << " " << results[1].second << ::std::endl;
-
-  auto m = ::pr::random_matrix<int, (1 << 16) + 3, 255>();
-
-  tasks = {
-    [m]{ ::pr::transpose(m); },
-    [m]{ ::pr::sse_transpose(m); }
-  };
-
-  results = ::pr::measure(tasks, 5);
-
-  ::std::cout << "-- row intensive --" << ::std::endl;
-  ::std::cout << "regular transpose: " << results[0].first.count() << " " << results[0].second << ::std::endl;
-  ::std::cout << "sse transpose:     " << results[1].first.count() << " " << results[1].second << ::std::endl;
+  ::std::cout << "naive: " << r[0] << ::std::endl;
+  ::std::cout << "sse:   " << r[1] << ::std::endl;
 }

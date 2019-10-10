@@ -19,7 +19,7 @@ TEMPLATE_TEST_CASE("matrix transpose", "", int, float) {
 }
 
 TEMPLATE_TEST_CASE("sse matrix transpose", "", /*4 bytes ->*/ int, float, ::std::size_t, /*8 bytes ->*/ double, ::std::uint_fast64_t) {
-  ::pr::matrix<TestType, 19, 13> m;
+  ::pr::matrix<TestType, 19, 19> m;
 
   for (::std::size_t i = 0; i < m.rows; ++i)
     for (::std::size_t j = 0; j < m.cols; ++j)
@@ -29,7 +29,7 @@ TEMPLATE_TEST_CASE("sse matrix transpose", "", /*4 bytes ->*/ int, float, ::std:
 
   for (::std::size_t i = 0; i < m.rows; ++i)
     for (::std::size_t j = 0; j < m.cols; ++j)
-      CHECK((i * i * j) == (transposed[j][i]));
+      REQUIRE((i * i * j) == (transposed[j][i]));
 }
 
 TEST_CASE("sse 16 byte transpose") {
@@ -53,4 +53,18 @@ TEST_CASE("sse 16 byte transpose") {
       CHECK(i == transposed[j][i].a);
       CHECK(j == transposed[j][i].b);
     }
+}
+
+TEMPLATE_TEST_CASE("cache friendly matrix transpose", "", int, float) {
+  ::pr::matrix<TestType, 19, 13> m;
+
+  for (::std::size_t i = 0; i < m.rows; ++i)
+    for (::std::size_t j = 0; j < m.cols; ++j)
+      m[i][j] = static_cast<TestType>(i * i * j);
+
+  auto transposed = ::pr::cache_friendly_transpose(m);
+
+  for (::std::size_t i = 0; i < m.rows; ++i)
+    for (::std::size_t j = 0; j < m.cols; ++j)
+      CHECK((i * i * j) == (transposed[j][i]));
 }
