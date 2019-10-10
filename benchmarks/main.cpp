@@ -13,8 +13,6 @@
 namespace pr {
 
   using result_type = ::std::vector<::std::pair<::std::chrono::nanoseconds, double>>;
-
-  
   
   result_type measure(::std::vector<::std::function<void(void)>>& tasks, ::std::size_t repetitions) {
 

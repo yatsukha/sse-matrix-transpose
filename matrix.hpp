@@ -43,11 +43,11 @@ namespace pr {
         ::_mm_free(data);
       }
 
-      matrix(matrix<T, R, C>&& other) {
+      matrix(matrix<T, R, C>&& other) noexcept {
         operator=(std::forward<matrix<T, R, C>>(other));
       }
 
-      matrix<T, R, C>& operator=(matrix<T, R, C>&& other) {
+      matrix<T, R, C>& operator=(matrix<T, R, C>&& other) noexcept {
         aligned_cols = other.aligned_cols;
         allocated = other.allocated;
         data = other.data;

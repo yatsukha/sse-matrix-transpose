@@ -22,7 +22,7 @@ TEST_CASE("matrix indexing test") {
 
   for (::std::size_t i = 0; i < m0.rows; ++i)
     for (::std::size_t j = 0; j < m0.cols; ++j)
-      m0[i][j] = i * j;
+      m0[i][j] = static_cast<int>(i * j);
 
   ::pr::matrix<int, 5, 5> const& m1 = m0;
 
